@@ -1,7 +1,7 @@
-Meter Reading Parser - SimpleNem12ParserImpl.parseSimpleNem12
+Meter Reading Parser
 ==========
 
-Implementation
+SimpleNem12ParserImpl.parseSimpleNem12
 -----
 * Made it a Maven project for ease of build and testing purposes.
 * The method takes in a CSV and parses it with the format outlined in the requirements.
