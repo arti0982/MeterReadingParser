@@ -2,7 +2,9 @@
 
 package simplenem12;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,11 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Simple test harness for trying out SimpleNem12Parser implementation
  */
 public class TestHarness {
+    static SimpleNem12ParserImpl simpleNem12Parser;
+
+    @BeforeAll
+    static void setUp() throws Exception {
+        simpleNem12Parser = new SimpleNem12ParserImpl();
+    }
 
     @Test
     public void parseNem12File() {
         File simpleNem12File = new File(getClass().getClassLoader().getResource("SimpleNem12.csv").getFile());
-        Collection<MeterRead> meterReads = new SimpleNem12ParserImpl().parseSimpleNem12(simpleNem12File);
+        Collection<MeterRead> meterReads = simpleNem12Parser.parseSimpleNem12(simpleNem12File);
         MeterRead read6123456789 = meterReads.stream().filter(mr -> mr.getNmi().equals("6123456789")).findFirst().get();
         assertEquals(-36.84, read6123456789.getTotalVolume().doubleValue());
         MeterRead read6987654321 = meterReads.stream().filter(mr -> mr.getNmi().equals("6987654321")).findFirst().get();
@@ -31,7 +39,7 @@ public class TestHarness {
     @Test
     public void testNem12File() {
         File simpleNem12File = new File(getClass().getClassLoader().getResource("TestNem12.csv").getFile());
-        Collection<MeterRead> meterReads = new SimpleNem12ParserImpl().parseSimpleNem12(simpleNem12File);
+        Collection<MeterRead> meterReads = simpleNem12Parser.parseSimpleNem12(simpleNem12File);
         MeterRead read123456 = meterReads.stream().filter(mr -> mr.getNmi().equals("123456")).findFirst().get();
         MeterRead read1234567 = meterReads.stream().filter(mr -> mr.getNmi().equals("1234567")).findFirst().get();
         MeterRead read12345678 = meterReads.stream().filter(mr -> mr.getNmi().equals("12345678")).findFirst().get();
@@ -44,5 +52,9 @@ public class TestHarness {
         assertEquals(6, read12345678.getVolumes().keySet().size());
     }
 
+    @AfterAll
+    static void tearDown() throws Exception {
+        simpleNem12Parser = null;
+    }
 
 }
