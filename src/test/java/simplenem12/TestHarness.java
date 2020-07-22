@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Simple test harness for trying out SimpleNem12Parser implementation
  */
 public class TestHarness {
-    static SimpleNem12ParserImpl simpleNem12Parser;
+    static SimpleNem12Parser simpleNem12Parser;
 
     @BeforeAll
     static void setUp() throws Exception {
